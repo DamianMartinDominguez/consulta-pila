@@ -7,13 +7,14 @@ realizar el main() con la llamada a dicha funcion. No utilizar variables globale
 */
 
 
+
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef struct
+typedef struct datos
               {
                  int cl;
-                 char D[30];
+                 char descripcion[30];
                  unsigned char tipo;
                } datos_t;
 struct pila{
@@ -28,8 +29,8 @@ void crearPila(struct pila **l);
 main()
 {
     datos_t nuevo;
-    struct pila_t *p = NULL, *aux= NULL;//apuntan todos a null
-    aux = (struct pila_t*)malloc(sizeof(struct pila_t));//se asigna memoria dinamica
+    struct pila *p = NULL, *aux= NULL;//apuntan todos a null
+    aux = (struct pila*)malloc(sizeof(struct pila));//se asigna memoria dinamica
     if(aux==NULL)
      {
        printf("\n no hay memoria disponible\n");
@@ -37,33 +38,33 @@ main()
       }
     do
     {
-        printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", pila->data.nombre,pila->data.edad,pila->data.legajo);
+        printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", p->d.cl,p->d.descripcion,p->d.tipo);
         aux = p;
         p = p->l;
         free(aux);
     }while(p->l != NULL);
   printf("\n----------------------------------------------------------------");
-    printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", pila->data.nombre,pila->data.edad,pila->data.legajo);
+    printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", p->d.cl,p->d.descripcion,p->d.tipo);
     printf("\n----------------------------------------------------------------");
     printf("\nfin");
-    free(pila);
-        
+    free(p);
+
     return 0;
 }
-  
-  
-}
+
+
+
 
 void crearPila (struct pila **l)
 {
-    struct pila *aux;
+    struct pila *aux,*p;
     struct datos bf;
     FILE *fp;
 
     if((fp=fopen("datos.dat","rb"))==NULL)
         {
             printf("no se puede abrir el archivo");
-            return ;
+            return;
         }
 
     fread(&bf,sizeof(struct datos),1,fp);
@@ -82,7 +83,7 @@ void crearPila (struct pila **l)
         {
          fclose(fp);
          FILE *fp=fopen("datos.dat","ab");
-         fwrite(bf,sizeof(struct datos),1,fp);  
+         fwrite(bf,sizeof(struct datos),1,fp);
       }
     }
     fclose(fp);
