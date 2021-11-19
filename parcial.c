@@ -5,3 +5,21 @@ realizar una funcion que pase como parametro la clave, entre otros parametros, y
 si el campo "tipo" tiene el bit 0 con valor 1, en caso de no encontrarlo crear un nuevo registro en el archivo(sin apilarlo). La funcion retornara un puntero a la pila
 realizarl el main() con la llamada a dicha funcion. No utilizar variables globales.
 */
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct
+              {
+                 int cl;
+                 char D[30];
+                 unsigned char tipo;
+               }
+struct pila{
+            struct datos d;
+            struct pila *l;
+            };
+
+void generaArchivo(void);
+void setPila(struct pila **p);
