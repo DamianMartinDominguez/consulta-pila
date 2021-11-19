@@ -15,7 +15,7 @@ typedef struct
                  int cl;
                  char D[30];
                  unsigned char tipo;
-               }
+               } datos_t;
 struct pila{
             struct datos d;
             struct pila *l;
@@ -27,14 +27,30 @@ void crearPila(struct pila **l);
 
 main()
 {
-  datos_t nuevo;
-    struct pila_t *pila = NULL, *aux= NULL;//apuntan todos a null
+    datos_t nuevo;
+    struct pila_t *p = NULL, *aux= NULL;//apuntan todos a null
     aux = (struct pila_t*)malloc(sizeof(struct pila_t));//se asigna memoria dinamica
     if(aux==NULL)
      {
        printf("\n no hay memoria disponible\n");
        return 0;
       }
+    do
+    {
+        printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", pila->data.nombre,pila->data.edad,pila->data.legajo);
+        aux = p;
+        p = p->l;
+        free(aux);
+    }while(p->l != NULL);
+  printf("\n----------------------------------------------------------------");
+    printf("\n el registro contiene :\n Nombre:%s  \nEdad: %d \nLegajo: %ld", pila->data.nombre,pila->data.edad,pila->data.legajo);
+    printf("\n----------------------------------------------------------------");
+    printf("\nfin");
+    free(pila);
+        
+    return 0;
+}
+  
   
 }
 
@@ -53,7 +69,7 @@ void crearPila (struct pila **l)
     fread(&bf,sizeof(struct datos),1,fp);
     while(!feof(fp))
     {
-        if(bf.tipo & 0x01)
+        if(bf.tipo & 0x01)// si tiene 1 en el bit 0
         {
             fread(&bf,sizeof(struct datos),1,fp);
             aux=(struct pila *) malloc (sizeof(struct pila));
@@ -62,7 +78,7 @@ void crearPila (struct pila **l)
             p=aux;
           return p;
         }
-       if(!(bf.tipo & 0x01))
+       if(!(bf.tipo & 0x01))// si tiene 0 en el bit 0
         {
          fclose(fp);
          FILE *fp=fopen("datos.dat","ab");
